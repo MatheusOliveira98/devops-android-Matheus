@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Devops-Matheus</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="home">home</string>
+    <string name="timeline">timeline</string>
+    <string name="profile">profile</string>
+    <string name="username">username</string>
+
 </resources>
