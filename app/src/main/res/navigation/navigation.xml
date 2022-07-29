@@ -8,4 +8,8 @@
         android:id="@+id/homeFragment"
         android:name="com.example.devops_matheus.ui.home.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.devops_matheus.ui.login.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

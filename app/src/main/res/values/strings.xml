@@ -6,5 +6,11 @@
     <string name="timeline">timeline</string>
     <string name="profile">profile</string>
     <string name="username">username</string>
+    <string name="logout">logout</string>
+    <string name="logged_in">logged in</string>
+    <string name="login">login</string>
+    <string name="welcome">welcome</string>
+    <string name="com_auth0_domain">dev-mog.eu.auth0.com</string>
+    <string name="com_auth0_clientID">pxoK8qnPD5B4C2oKhwTDbrNPh4DQgdgo</string>
 
 </resources>

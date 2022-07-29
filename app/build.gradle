@@ -8,12 +8,14 @@ android {
 
     defaultConfig {
         applicationId "com.example.devops_matheus"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [auth0Domain: "@string/com_auth0_domain", auth0Scheme: "demo"]
     }
 
     buildTypes {
@@ -46,6 +48,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    implementation 'com.auth0.android:auth0:2.+'
+    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
 
     testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -16,6 +16,10 @@
         <item
             android:id="@+id/profielFragment"
             android:title="@string/profile" />
+
+        <item
+            android:id="@+id/loginFragment"
+            android:title="@string/login" />
     </group>
 
 </menu>
