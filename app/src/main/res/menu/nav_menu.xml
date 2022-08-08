@@ -10,8 +10,12 @@
             android:title="@string/home" />
 
         <item
-            android:id="@+id/timelineFragment"
+            android:id="@+id/postOverviewFragment"
             android:title="@string/timeline" />
+
+        <item
+            android:id="@+id/postCreationFragment"
+            android:title="@string/create_post" />
 
         <item
             android:id="@+id/profielFragment"

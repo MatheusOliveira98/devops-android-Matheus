@@ -1,4 +1,4 @@
-package com.example.devops_matheus.ui.home
+package com.example.devops_matheus.ui.screens.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import com.example.devops_matheus.R
 import com.example.devops_matheus.databinding.FragmentHomeBinding
 
@@ -31,6 +32,11 @@ class HomeFragment : Fragment() {
         // Specify the current activity as the lifecycle owner of the binding. This is used so that
         // the binding can observe LiveData updates
         binding.setLifecycleOwner(this)
+
+        binding.createPostButton.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.postCreationFragment)
+        )
+
         return binding.root
     }
 

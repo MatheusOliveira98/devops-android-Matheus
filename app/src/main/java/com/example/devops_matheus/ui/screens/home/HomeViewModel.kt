@@ -1,4 +1,4 @@
-package com.example.devops_matheus.ui.home
+package com.example.devops_matheus.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 

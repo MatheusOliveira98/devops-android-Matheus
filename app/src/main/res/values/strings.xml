@@ -12,5 +12,6 @@
     <string name="welcome">welcome</string>
     <string name="com_auth0_domain">dev-mog.eu.auth0.com</string>
     <string name="com_auth0_clientID">pxoK8qnPD5B4C2oKhwTDbrNPh4DQgdgo</string>
+    <string name="create_post">create post</string>
 
 </resources>

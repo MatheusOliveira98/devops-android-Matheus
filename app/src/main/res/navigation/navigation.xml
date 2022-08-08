@@ -6,10 +6,39 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.devops_matheus.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:name="com.example.devops_matheus.ui.screens.home.HomeFragment"
+        android:label="HomeFragment">
+
+        <action
+            android:id="@+id/action_homeFragment_to_postCreationFragment"
+            app:destination="@+id/postCreationFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.devops_matheus.ui.login.LoginFragment"
         android:label="LoginFragment" />
+
+    <fragment
+        android:id="@+id/postOverviewFragment"
+        android:name="com.example.devops_matheus.ui.screens.postOverview.PostOverviewFragment"
+        android:label="PostOverviewFragment">
+
+        <action
+            android:id="@+id/action_postOverviewFragment_to_postCreationFragment"
+            app:destination="@+id/postCreationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/postCreationFragment"
+        android:name="com.example.devops_matheus.ui.screens.postCreation.PostCreationFragment"
+        android:label="PostCreationFragment">
+
+        <action
+            android:id="@+id/action_postCreationFragment_to_postOverviewFragment"
+            app:destination="@+id/postOverviewFragment"
+            app:popUpTo="@id/postCreationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
 </navigation>
