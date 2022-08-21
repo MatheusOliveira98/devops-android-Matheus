@@ -8,6 +8,7 @@ import com.auth0.android.result.Credentials
 
 object CredentialsManager {
     private val ACCESS_TOKEN = "access_token"
+    private val USER_ID = "user_id"
 
     private lateinit var editor: SharedPreferences.Editor
 
@@ -24,6 +25,7 @@ object CredentialsManager {
         )
 
         editor = sp.edit()
+        editor.putString(USER_ID, credentials.user.getId())
         editor.putString(ACCESS_TOKEN, credentials.accessToken)
             .apply()
     }
@@ -40,5 +42,19 @@ object CredentialsManager {
         )
 
         return sp.getString(ACCESS_TOKEN, null)
+    }
+
+    fun getUserId(context: Context): String? {
+        val masterKeyAlias: String = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+
+        val sp: SharedPreferences = EncryptedSharedPreferences.create(
+            "secret_shared_prefs",
+            masterKeyAlias,
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
+        return sp.getString(USER_ID, null)
     }
 }

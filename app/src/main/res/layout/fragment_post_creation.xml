@@ -35,6 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="Post link to external page here"
@@ -49,19 +50,43 @@
             tools:text="Post link to external page will come here" />
 
         <Button
+            android:id="@+id/addImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Add Image"
+            app:layout_constraintStart_toStartOf="@+id/editTextPostLink"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPostLink" />
+
+        <ImageView
+            android:id="@+id/imageViewPostImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/save_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/addImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPostLink"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
             android:id="@+id/save_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Save"
             android:onClickListener="@{() -> postCreationViewModel.savePostClick()}"
+            android:text="Save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPostLink" />
+            app:layout_constraintTop_toBottomOf="@+id/addImageButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

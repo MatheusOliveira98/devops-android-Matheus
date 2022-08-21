@@ -1,6 +1,7 @@
 package com.example.devops_matheus.ui.login
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,22 +9,29 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.Navigation
 import com.auth0.android.Auth0
 import com.auth0.android.authentication.AuthenticationAPIClient
 import com.auth0.android.authentication.AuthenticationException
 import com.auth0.android.callback.Callback
+import com.auth0.android.management.ManagementException
+import com.auth0.android.management.UsersAPIClient
 import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
 import com.auth0.android.result.UserProfile
 import com.example.devops_matheus.R
+import com.example.devops_matheus.ui.screens.profile.ProfileFragment
 import timber.log.Timber
 
 class LoginFragment : Fragment() {
     private lateinit var account: Auth0
     private lateinit var loggedInText: TextView
     private var loggedIn = false
+    private var cachedUserProfile: UserProfile? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +63,8 @@ class LoginFragment : Fragment() {
 
         checkIfToken()
         setLoggedInText()
-
+        Timber.i("Robbe")
+        Timber.i(cachedUserProfile?.getId())
         return view
     }
 
@@ -147,11 +156,35 @@ class LoginFragment : Fragment() {
                 override fun onSuccess(profile: UserProfile) {
                     // We have the user's profile!
                     Timber.i("SUCCESS! got the user profile")
-                    val email = profile.email
-                    val name = profile.name
+                    Timber.i(profile.getId())
+                    cachedUserProfile = profile
+                    //getUserMetadata(accessToken)
                     loggedIn = true
                     setLoggedInText()
                 }
             })
+    }
+/*
+    private fun getUserMetadata(accessToken: String) {
+        // Create the user API client
+        val usersClient = UsersAPIClient(account, accessToken)
+
+        // Get the full user profile
+        usersClient.getProfile(cachedUserProfile!!.getId()!!)
+            .start(object : Callback<UserProfile, ManagementException> {
+                override fun onFailure(exception: ManagementException) {
+                    Toast.makeText(context, "Failure: ${exception.getCode()}", Toast.LENGTH_LONG).show()
+                    Timber.e("Failure: ${exception.getCode()}")
+                }
+
+                override fun onSuccess(userProfile: UserProfile) {
+                    Timber.i(userProfile.getId())
+                    cachedUserProfile = userProfile;
+                }
+            })
+    }*/
+
+    fun getCachedUser(): UserProfile? {
+        return cachedUserProfile
     }
 }

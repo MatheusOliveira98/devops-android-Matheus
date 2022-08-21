@@ -11,6 +11,9 @@ import com.example.devops_matheus.ui.database.posts.Post
 class PostAdapter(val clickListener: PostListener): ListAdapter<Post, ViewHolder>(PostDiffCallback()) {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+//        holder.itemView.setOnClickListener {
+//            clickListener.onClick(item)
+//        }
         holder.bind(clickListener, item)
     }
 
@@ -22,6 +25,9 @@ class PostAdapter(val clickListener: PostListener): ListAdapter<Post, ViewHolder
 class ViewHolder(val binding: PostListItemBinding): RecyclerView.ViewHolder(binding.root) {
     fun bind(clickListener: PostListener, item: Post) {
         binding.postText.text = item.postText
+        binding.postUser.text = item.postUser
+        binding.postLink.text = item.postLink
+        binding.postImage.setImageBitmap(item.postImage)
 
         binding.post = item
         binding.clickListener = clickListener
@@ -47,6 +53,6 @@ class PostDiffCallback: DiffUtil.ItemCallback<Post>() {
     }
 }
 
-class PostListener(val clickListener: (postId: Long)->Unit) {
-    fun onClick(post: Post) = clickListener(post.postId)
+class PostListener(val clickListener: (post: Post)->Unit) {
+    fun onClick(post: Post) = clickListener(post)
 }

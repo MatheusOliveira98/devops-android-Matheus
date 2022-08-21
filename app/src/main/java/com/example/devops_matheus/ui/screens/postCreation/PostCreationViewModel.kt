@@ -1,6 +1,7 @@
 package com.example.devops_matheus.ui.screens.postCreation
 
 import android.app.Application
+import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,11 +28,13 @@ class PostCreationViewModel(val database: PostDatabaseDao, application: Applicat
         _saveEvent.value = false
     }
 
-    fun savePost(newPostText: String, newPostLink: String) {
+    fun savePost(newPostText: String, newPostLink: String, newPostUser: String, newPostImage: Bitmap?) {
         viewModelScope.launch {
             val post = Post()
             post.postText = newPostText
             post.postLink = newPostLink
+            post.postUser = newPostUser
+            post.postImage = newPostImage
             savePostToDatabase(post)
         }
     }

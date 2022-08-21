@@ -13,6 +13,11 @@ import androidx.navigation.Navigation
 import com.example.devops_matheus.R
 import com.example.devops_matheus.databinding.FragmentPostOverviewBinding
 import com.example.devops_matheus.ui.database.posts.PostDatabase
+import android.content.Intent
+import android.net.Uri
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.post_list_item.*
+
 
 class PostOverviewFragment: Fragment() {
 
@@ -40,9 +45,23 @@ class PostOverviewFragment: Fragment() {
         binding.lifecycleOwner = this
 
         val adapter = PostAdapter(PostListener {
-            postId -> Toast.makeText(context, "${postId}", Toast.LENGTH_LONG).show()
+                post -> Toast.makeText(context, "${post.postId}", Toast.LENGTH_LONG).show()
+            //postId -> Navigation.findNavController(requireActivity(), R.id.postFragment)
+            viewModel.displayPostDetails(post)
         })
-        binding.postList.adapter = adapter
+
+        viewModel.navigateToSelectedPost.observe(
+            viewLifecycleOwner,
+            Observer
+            {
+                if (null != it) {
+                    this.findNavController().navigate(
+                        PostOverviewFragmentDirections.actionPostOverviewFragmentToPostFragment(it.postId)
+                    )
+                    viewModel.displayPostDetailsComplete()
+                }
+            }
+        )
 
         viewModel.posts.observe(viewLifecycleOwner, Observer{
             adapter.submitList(it)
@@ -51,6 +70,8 @@ class PostOverviewFragment: Fragment() {
         binding.postCreateButton.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.postCreationFragment)
         )
+
+        binding.postList.adapter = adapter
 
         return binding.root
     }

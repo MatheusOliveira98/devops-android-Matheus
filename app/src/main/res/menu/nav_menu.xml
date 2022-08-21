@@ -18,7 +18,7 @@
             android:title="@string/create_post" />
 
         <item
-            android:id="@+id/profielFragment"
+            android:id="@+id/profileFragment"
             android:title="@string/profile" />
 
         <item

@@ -5,23 +5,58 @@
 
     <data>
         <variable
-            name="posts"
+            name="postViewModel"
             type="com.example.devops_matheus.ui.screens.posts.PostViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        tools:context="posts.PostFragment">
 
         <TextView
-            android:id="@+id/message"
+            android:id="@+id/post_user"
+            android:text="@{postViewModel.selectedPost.postUser}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PostFragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Post user here" />
 
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/post_user"
+            app:layout_constraintTop_toBottomOf="@+id/post_user"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/post_link"
+            android:text="@{postViewModel.selectedPost.postLink}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/post_user"
+            app:layout_constraintTop_toBottomOf="@+id/post_image"
+            tools:text="Post link here" />
+
+        <TextView
+            android:id="@+id/post_text"
+            android:text="@{postViewModel.selectedPost.postText}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/post_user"
+            app:layout_constraintTop_toBottomOf="@+id/post_link"
+            tools:text="Post text content here" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

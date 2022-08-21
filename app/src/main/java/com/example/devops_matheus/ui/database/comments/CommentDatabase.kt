@@ -1,33 +1,29 @@
-package com.example.devops_matheus.ui.database.posts
+package com.example.devops_matheus.ui.database.comments
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.example.devops_matheus.ui.database.Converters
-import java.security.AccessControlContext
 
-@Database(entities = [Post::class], version = 3, exportSchema = false)
-@TypeConverters(Converters::class)
-abstract class PostDatabase: RoomDatabase() {
+@Database(entities = [Comment::class], version = 1, exportSchema = false)
+abstract class CommentDatabase: RoomDatabase() {
 
-    abstract val postDatabaseDao: PostDatabaseDao
+    abstract val commentDatabaseDao: CommentDatabaseDao
 
     companion object {
 
         @Volatile
-        private var INSTANCE: PostDatabase? = null
+        private var INSTANCE: CommentDatabase? = null
 
-        fun getInstance(context: Context): PostDatabase {
+        fun getInstance(context: Context): CommentDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        PostDatabase::class.java,
-                        "post_database"
+                        CommentDatabase::class.java,
+                        "comment_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
