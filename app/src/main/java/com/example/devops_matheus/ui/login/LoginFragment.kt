@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.auth0.android.Auth0
 import com.auth0.android.authentication.AuthenticationAPIClient
@@ -23,15 +24,16 @@ import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
 import com.auth0.android.result.UserProfile
 import com.example.devops_matheus.R
+import com.example.devops_matheus.ui.database.users.UserDatabase
 import com.example.devops_matheus.ui.screens.profile.ProfileFragment
+import com.example.devops_matheus.ui.screens.profile.ProfileViewModel
+import com.example.devops_matheus.ui.screens.profile.ProfileViewModelFactory
 import timber.log.Timber
 
 class LoginFragment : Fragment() {
     private lateinit var account: Auth0
     private lateinit var loggedInText: TextView
     private var loggedIn = false
-    private var cachedUserProfile: UserProfile? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +53,15 @@ class LoginFragment : Fragment() {
             getString(R.string.com_auth0_domain)
         )
 
+        val appContext = requireNotNull(this.activity).application
+        val dataSource = UserDatabase.getInstance(appContext).userDatabaseDao
+
+        val viewModelFactory = LoginViewModelFactory(dataSource, appContext)
+        val viewModel: LoginViewModel by viewModels{viewModelFactory}
+
         val loginButton = view.findViewById<Button>(R.id.loginbutton)
         loginButton?.setOnClickListener {
-            loginWithBrowser()
+            loginWithBrowser(viewModel)
         }
         val logoutButton = view.findViewById<Button>(R.id.logout_button)
         logoutButton?.setOnClickListener {
@@ -61,18 +69,17 @@ class LoginFragment : Fragment() {
         }
         loggedInText = view.findViewById(R.id.logged_in_textview)
 
-        checkIfToken()
+        checkIfToken(viewModel)
         setLoggedInText()
-        Timber.i("Robbe")
-        Timber.i(cachedUserProfile?.getId())
+
         return view
     }
 
-    private fun checkIfToken() {
+    private fun checkIfToken(viewModel: LoginViewModel) {
         val token = CredentialsManager.getAccessToken(requireContext())
         if (token != null) {
             // checking if the token works...
-            showUserProfile(token)
+            showUserProfile(token, viewModel)
         } else {
             Toast.makeText(context, "Token doesn't exist", Toast.LENGTH_SHORT).show()
         }
@@ -86,7 +93,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun loginWithBrowser() {
+    private fun loginWithBrowser(viewModel: LoginViewModel) {
         // Setup the WebAuthProvider, using the custom scheme and scope.
 
         WebAuthProvider.login(account)
@@ -114,7 +121,7 @@ class LoginFragment : Fragment() {
                         Toast.makeText(context, accessToken, Toast.LENGTH_SHORT).show()
 
                         CredentialsManager.saveCredentials(requireContext(), credentials)
-                        checkIfToken()
+                        checkIfToken(viewModel)
                         setLoggedInText()
                     }
                 }
@@ -141,7 +148,7 @@ class LoginFragment : Fragment() {
             )
     }
 
-    private fun showUserProfile(accessToken: String) {
+    private fun showUserProfile(accessToken: String, viewModel: LoginViewModel) {
         var client = AuthenticationAPIClient(account)
 
         // With the access token, call `userInfo` and get the profile from Auth0.
@@ -157,34 +164,11 @@ class LoginFragment : Fragment() {
                     // We have the user's profile!
                     Timber.i("SUCCESS! got the user profile")
                     Timber.i(profile.getId())
-                    cachedUserProfile = profile
                     //getUserMetadata(accessToken)
+                    viewModel.addUser(profile)
                     loggedIn = true
                     setLoggedInText()
                 }
             })
-    }
-/*
-    private fun getUserMetadata(accessToken: String) {
-        // Create the user API client
-        val usersClient = UsersAPIClient(account, accessToken)
-
-        // Get the full user profile
-        usersClient.getProfile(cachedUserProfile!!.getId()!!)
-            .start(object : Callback<UserProfile, ManagementException> {
-                override fun onFailure(exception: ManagementException) {
-                    Toast.makeText(context, "Failure: ${exception.getCode()}", Toast.LENGTH_LONG).show()
-                    Timber.e("Failure: ${exception.getCode()}")
-                }
-
-                override fun onSuccess(userProfile: UserProfile) {
-                    Timber.i(userProfile.getId())
-                    cachedUserProfile = userProfile;
-                }
-            })
-    }*/
-
-    fun getCachedUser(): UserProfile? {
-        return cachedUserProfile
     }
 }

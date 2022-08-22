@@ -55,7 +55,7 @@
             app:destination="@+id/postOverviewFragment" />
         <argument
             android:name="selectedPost"
-            app:argType="long"/>
+            app:argType="long" />
     </fragment>
 
     <fragment
@@ -66,6 +66,23 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@+id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_profileEditFragment"
+            app:destination="@+id/profileEditFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="com.example.devops_matheus.ui.screens.profileEdit.ProfileEditFragment"
+        android:label="ProfileEditFragment">
+
+        <action
+            android:id="@+id/action_profileEditFragment_to_ProfileFragment"
+            app:destination="@+id/profileFragment"
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
     </fragment>

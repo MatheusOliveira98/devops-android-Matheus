@@ -1,4 +1,4 @@
-package com.example.devops_matheus.ui.screens.profile
+package com.example.devops_matheus.ui.login
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -12,7 +12,7 @@ import com.example.devops_matheus.ui.database.users.UserDatabaseDao
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ProfileViewModel(val database: UserDatabaseDao, val userId: String, application: Application): AndroidViewModel(application) {
+class LoginViewModel(val database: UserDatabaseDao, application: Application): AndroidViewModel(application) {
 
     private val _currentUser = MutableLiveData<User>()
     val currentUser: LiveData<User>
@@ -33,15 +33,18 @@ class ProfileViewModel(val database: UserDatabaseDao, val userId: String, applic
 
     init {
         Timber.i("ProfileViewModel init is called")
-        setUser()
-        Timber.i(userId)
         Timber.i(currentUser.value?.userId)
         _editEvent.value = false
     }
 
-    fun setUser() {
+    fun addUser(user: UserProfile) {
         viewModelScope.launch {
-            _currentUser.value = database.get(userId)
+            var newUser = User(user.getId()!!, user.name, null, null)
+            saveUserToDatabase(newUser)
         }
+    }
+
+    suspend fun saveUserToDatabase(newUser: User) {
+        database.insert(newUser)
     }
 }

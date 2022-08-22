@@ -1,4 +1,4 @@
-package com.example.devops_matheus.ui.database.posts
+package com.example.devops_matheus.ui.database.users
 
 import android.content.Context
 import androidx.room.Database
@@ -6,28 +6,26 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.devops_matheus.ui.database.Converters
-import java.security.AccessControlContext
 
-
-@Database(entities = [Post::class], version = 3, exportSchema = false)
+@Database(entities = [User::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class PostDatabase: RoomDatabase() {
-    abstract val postDatabaseDao: PostDatabaseDao
+abstract class UserDatabase: RoomDatabase() {
+    abstract val userDatabaseDao: UserDatabaseDao
 
     companion object {
 
         @Volatile
-        private var INSTANCE: PostDatabase? = null
+        private var INSTANCE: UserDatabase? = null
 
-        fun getInstance(context: Context): PostDatabase {
+        fun getInstance(context: Context): UserDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        PostDatabase::class.java,
-                        "post_database"
+                        UserDatabase::class.java,
+                        "user_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
