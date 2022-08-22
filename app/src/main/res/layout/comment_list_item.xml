@@ -47,6 +47,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:singleLine="false"
+                app:layout_constraintEnd_toStartOf="@+id/bewerk_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Comment user here" />
@@ -61,9 +63,25 @@
                 app:layout_constraintTop_toBottomOf="@+id/comment_user"
                 tools:text="Comment text here" />
 
+
+            <Button
+                android:id="@+id/reply_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:onClick="@{()->postViewModel.replyCommentClick(comment)}"
+                android:paddingLeft="4dp"
+                android:paddingTop="2dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="2dp"
+                android:text="reply"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/comment_text"
+                app:layout_constraintTop_toBottomOf="@+id/comment_text" />
+
             <Button
                 android:id="@+id/bewerk_button"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -80,7 +98,6 @@
 
             <Button
                 android:id="@+id/verwijder_button"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"

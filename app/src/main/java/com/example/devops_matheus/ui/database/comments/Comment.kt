@@ -18,6 +18,9 @@ data class Comment(
     @ColumnInfo(name = "comment_user")
     var commentUser: String = "",
 
-    @ColumnInfo(name = "comment_reaction")
-    var commentReaction: Long = 0L
+    @ColumnInfo(name = "comment_is_reaction")
+    var commentIsReaction: Boolean = false,
+
+    @ColumnInfo(name = "comment_reaction_id")
+    var commentReaction: Long? = 0L
 )

@@ -28,7 +28,7 @@ interface CommentDatabaseDao {
     @Query("SELECT * FROM comment_table WHERE comment_postId = :postId ORDER BY commentId DESC LIMIT 1")
     suspend fun getLastCommentFromPost(postId: Long): Comment?
 
-    @Query("SELECT * FROM comment_table WHERE comment_postId = :postId AND comment_reaction = :commentId ORDER BY commentId DESC")
+    @Query("SELECT * FROM comment_table WHERE comment_postId = :postId AND comment_reaction_id = :commentId ORDER BY commentId DESC")
     suspend fun getReactionsFromComment(postId: Long, commentId: Long): List<Comment>
 
     @Query("DELETE FROM comment_table")

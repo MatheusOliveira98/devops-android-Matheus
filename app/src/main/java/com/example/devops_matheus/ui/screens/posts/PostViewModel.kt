@@ -24,6 +24,10 @@ import android.view.View
 
 class PostViewModel(val database: PostDatabaseDao, val databaseCom: CommentDatabaseDao, application: Application): AndroidViewModel(application) {
 
+    private var _isReaction: Boolean
+    val isReaction: Boolean
+        get() = _isReaction
+
     private var _selectedPost = MutableLiveData<Post>()
     val selectedPost: LiveData<Post>
         get() = _selectedPost
@@ -36,6 +40,10 @@ class PostViewModel(val database: PostDatabaseDao, val databaseCom: CommentDatab
     val updateEventComment: LiveData<Boolean>
         get() = _updateEventComment
 
+    private val _replyEventComment = MutableLiveData<Boolean>()
+    val replyEventComment: LiveData<Boolean>
+        get() = _replyEventComment
+
     private var _comments = MutableLiveData<List<Comment>>()
     val comments: LiveData<List<Comment>>
         get() = _comments
@@ -45,6 +53,7 @@ class PostViewModel(val database: PostDatabaseDao, val databaseCom: CommentDatab
     init {
         Timber.i("PostViewModel init is called")
         _saveEventComment.value = false
+        _isReaction = false
     }
 
     fun setPost(postId: Long) {
@@ -76,15 +85,25 @@ class PostViewModel(val database: PostDatabaseDao, val databaseCom: CommentDatab
         _updateEventComment.value = false
     }
 
+    fun replyCommentClick(comment: Comment) {
+        _replyEventComment.value = true
+        uComment = comment
+        _isReaction = true
+    }
+
+    fun replyCommentDone() {
+        _replyEventComment.value = false
+        _isReaction = false
+    }
+
     fun saveComment(postId: Long, commentText: String, commentUser: String, reaction: Long?) {
         viewModelScope.launch {
             val com = Comment()
             com.commentPostId = postId
             com.commentText = commentText
             com.commentUser = commentUser
-            if(reaction != null) {
-                com.commentReaction = reaction
-            }
+            com.commentIsReaction = isReaction
+            com.commentReaction = reaction
             saveCommentToDatabase(com)
             _comments.value = databaseCom.getAllCommentsFromPost(selectedPost.value!!.postId)
         }

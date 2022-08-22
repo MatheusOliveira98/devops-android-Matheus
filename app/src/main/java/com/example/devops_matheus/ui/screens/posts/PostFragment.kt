@@ -100,6 +100,13 @@ class PostFragment: Fragment() {
             }
         })
 
+        viewModel.replyEventComment.observe(viewLifecycleOwner, Observer { replyEventComment ->
+            if (replyEventComment) {
+                replyCommentDialog(viewModel, userId!!)
+                viewModel.replyCommentDone()
+            }
+        })
+
         return binding.root
     }
 
@@ -154,6 +161,31 @@ class PostFragment: Fragment() {
         alert.setPositiveButton("Done") { dialog, which ->
             viewModel.uComment.commentText = editedComment.text.toString()
             viewModel.updateComment()
+        }
+        val dialog: AlertDialog = alert.create()
+        dialog.show()
+    }
+
+    fun replyCommentDialog(viewModel: PostViewModel, userId: String) {
+        val inflater = layoutInflater
+        val alertLayout: View = inflater.inflate(R.layout.comment_alert_dialog, null)
+        val editedComment: TextInputEditText = alertLayout.findViewById(R.id.tiet_comment)
+
+        val alert: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+
+        alert.setView(alertLayout)
+
+        alert.setCancelable(false)
+        alert.setNegativeButton("Cancel") { dialog, which ->
+        }
+
+        alert.setPositiveButton("Done") { dialog, which ->
+            viewModel.saveComment(
+                viewModel.selectedPost.value!!.postId,
+                editedComment.text.toString(),
+                userId!!,
+                viewModel.uComment.commentId
+            )
         }
         val dialog: AlertDialog = alert.create()
         dialog.show()

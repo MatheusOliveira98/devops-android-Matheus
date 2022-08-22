@@ -29,13 +29,17 @@ class CommentAdapter(val clickListener: CommentListener, val userId: String, val
 
 class ViewHolder(val binding: CommentListItemBinding): RecyclerView.ViewHolder(binding.root) {
     fun bind(clickListener: CommentListener, item: Comment, userId: String, pVM: PostViewModel) {
-        binding.commentUser.text = item.commentUser
+        if(item.commentIsReaction) {
+            binding.commentUser.text = "${item.commentUser} reply to ${pVM.uComment.commentUser}"
+        } else {
+            binding.commentUser.text = item.commentUser
+        }
         binding.commentText.text = item.commentText
 
         Timber.i(item.commentUser + " vs " + userId)
-        if(item.commentUser == userId) {
-            binding.bewerkButton.isVisible = true
-            binding.verwijderButton.isVisible = true
+        if(item.commentUser != userId) {
+            binding.bewerkButton.isGone = true
+            binding.verwijderButton.isGone = true
         }
         binding.comment = item
         binding.clickListener = clickListener
