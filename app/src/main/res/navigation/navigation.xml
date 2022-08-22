@@ -86,4 +86,10 @@
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/quoteFragment"
+        android:name="com.example.devops_matheus.ui.screens.quote.QuoteFragment"
+        android:label=".QuoteFragment">
+    </fragment>
 </navigation>

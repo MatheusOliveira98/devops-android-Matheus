@@ -24,6 +24,10 @@
         <item
             android:id="@+id/loginFragment"
             android:title="@string/login" />
+
+        <item
+            android:id="@+id/quoteFragment"
+            android:title="@string/quote" />
     </group>
 
 </menu>

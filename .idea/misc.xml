@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/fragment_post_overview.xml" value="0.12887716041863873" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile_edit.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_quote.xml" value="0.19202898550724637" />
         <entry key="app/src/main/res/layout/fragment_recycleview.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/layout/main_fragment.xml" value="0.128125" />
